@@ -1,47 +1,116 @@
-const COINURL ="https://api.coinmarketcap.com/v1/ticker/?limit=10" // top 10 coins on coinMarketCap
-const MARKETCAPURL =" https://api.coinmarketcap.com/v1/global/" // gobal marketcap
+const coinUrl ="https://api.coinmarketcap.com/v1/ticker/?limit=15" // top 10 coins on coinMarketCap
+const marketCapUrl ="https://api.coinmarketcap.com/v1/global/" // gobal marketcap
 
-function getDataFromApi(callback){
+let allCoinData = [];
+
+
+function getCoinDataFromApi(callback){
   // console.log(callback);
   const query = {
-    url: COINURL,
+    url: coinUrl,
+    dataType: 'json',
+    type: 'Get',
+    success: function (data){
+      allCoinData = data
+      callback(data);
+    }
+
+  }
+  $.ajax(query);
+
+}
+
+function getMarketCapData(callback){
+
+  const query ={
+    url: marketCapUrl,
     dataType: 'json',
     type: 'Get',
     success: callback
   };
   $.ajax(query);
+
 }
 
-// function getMarketCapData(callback){
-//   const query ={
-//     url: MARKETCAPURL,
-//     dataType: 'json',
-//     type: 'Get',
-//     success: callback
-//   };
-//   $.ajax(query)
-// }
+getCoinDataFromApi(formatCryptoCoinData);
+getMarketCapData(displayMarketCapData);
 
-getDataFromApi(displayCryptoData);
-// getMarketCapData(dipslayMarketCapData);
+function formatCryptoCoinData(data){
 
-function displayCryptoData(data){
+   const formattedData = data.map(crypto =>{
+     return {
+       name: crypto.name,
+       usdPrice: crypto.price_usd,
+       oneHour: crypto.percent_change_1h
 
-  for (let i = 0; i < data.length; i++){
+     }
+   })
+   displayCryptoData(formattedData);
+  }
 
-    var cryptoName = data[i].name;
-    var cryptoPriceUSD = data[i].price_usd
-    var cryptoPercentChange1hr = data[i].percent_change_1h
-    var cryptoPercentChange24hr = data[i].percent_change_24h
 
+function displayCryptoData(formattedData){
+  $(".data").empty();
+  for (let i = 0; i < formattedData.length; i++){
+    let crypto = formattedData[i];
       $(".data").append(`
-        <div class ="cryptoCards">
-          <h2 class ="cryptoName">${cryptoName}</h2> Current price is ${cryptoPriceUSD}<br>
-          1 hour perecent change is ${cryptoPercentChange1hr}<br>
-          24 hour change is ${cryptoPercentChange24hr}% <br></div>`
+         <div class ="cryptoCards">
+           <h2 class ="cryptoName">${crypto.name}</h2> Current price is $ ${crypto.usdPrice}
+           <br>${crypto.name}'s 1 hour change is ${crypto.oneHour}%`
+         )
 
-        );
-
-      }
-
+  }
 }
+
+function filterCoinData(term){
+  const filterd = allCoinData.filter(coin => {
+    return coin.name.toLowerCase() == term.toLowerCase();
+  })
+  formatCryptoCoinData(filterd);
+}
+
+function toggleChange() {
+  const filtered = allCoinData.filter(coin => {
+    return +coin.percent_change_24h > 0
+  })
+  formatCryptoCoinData(filtered)
+}
+
+function displayMarketCapData(data){
+  var formattedData = data;
+  var value = formattedData.toLocaleString({
+
+  });
+  console.log(value);
+  $(".marketCapData").append(
+    `<h3>${data.total_market_cap_usd.toLocaleString()}</h3> Current Market Cap`
+    )
+
+  }
+
+
+
+$(function () {
+  $(".js-search-form").submit(event => {
+
+    event.preventDefault();
+    const userSearch = $(".jsSearch").val()
+    filterCoinData(userSearch);
+    $(".jsSearch").val("")
+  });
+  $(".showChange").change(event => {
+    console.log("checked");
+    if ($(".showChange").is(":checked")){
+      console.log("hi");
+      toggleChange()
+    }
+    else {
+      formatCryptoCoinData(allCoinData);
+    }
+  })
+  $(".clearButton").click(event =>{
+    event.preventDefault();
+    $(".showChange").prop('checked', false);
+    formatCryptoCoinData(allCoinData);
+  })
+});

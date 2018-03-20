@@ -19,6 +19,7 @@ body{
   text-align: center;
   width: 60%;
   margin: 0 auto;
+  margin-top: 55px;
   margin-bottom: 55px;
   -webkit-box-shadow: 10px 12px 35px 0px rgba(0,0,0,0.2);
   -moz-box-shadow: 10px 12px 35px 0px rgba(0,0,0,0.2);
@@ -29,3 +30,16 @@ body{
     color: blue;
     font-size: 3em;
   }
+
+  .searchArea{
+    padding-top: 25px;
+    padding-bottom: 25px;
+    background-color: #ABB7B7;
+  }
+.search{
+
+padding-left: 110px;
+padding-right: 110px;
+
+
+}
