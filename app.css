@@ -8,7 +8,9 @@ body{
 
 }
 
-
+.mainDisplay{
+  display: inline-flex;
+}
 .cryptoCards{
   padding-bottom: 150px;
   border-style: solid;
@@ -17,7 +19,7 @@ body{
   border-radius: 25px;
   background-color: white;
   text-align: center;
-  width: 60%;
+  width: 80%;
   margin: 0 auto;
   margin-top: 55px;
   margin-bottom: 55px;
