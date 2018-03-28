@@ -3,33 +3,46 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="app.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Montserrat" rel="stylesheet">
+      <link rel="stylesheet" href="app.css">
     <title></title>
   </head>
   <body>
-<div class ="header">
-    <h1>Crypto Notifier</h1>
-  </div>
+<header role ="banner" >
+  <a class = "logoLink" href="/"><img class ="logo" src = "https://res.cloudinary.com/dx5z7wjpw/image/upload/v1522040322/CC-logo.png"></a>
+
+  <div class="marketCapData"></div>
   <div class="searchArea">
+
     <form class="js-search-form" action="#" method="post">
 
-      <input type="text" name="jsSearch" value="" placeholder="Search Currencies"class ="jsSearch">
-      <button type="submit" name="button">Search</button>
-      <input type="checkbox" class ="showChange">show postive changes
-      <button type="button" name="button" class="clearButton">Clear Search</button>
+      <input type="text" class = "jsSearch" name="jsSearch" value="" placeholder="Search Currencies">
+
+  
+      <select class="filterDropdown" name="">
+        <option value="all coins">Show All Coins</option>
+        <option value="gainers">Show Biggest Gainers</option>
+        <option value="losers">Show Biggest Losers</option>
+
+      </select>
+      <button type="submit" class = "searchButton" name="button">Search</button>
     </form>
   </div>
+</header>
 
-<div class="marketCapData"></div>
-<div class="mainDisplay">
+<section class ="main"role="main">
 
-  <div class="data"></div>
-  <div class="youtubeSection">
-    <h2> Latest Crypto News Videos</h2>
-    <div class="youtubeData"></div>
+  <div class="mainDisplay">
+    <div class="data"></div>
   </div>
-</div>
 
+  <div class="youtubeSection">
+      <h2> Latest Crypto News Videos</h2>
+      <div class="youtubeData"></div>
+  </div>
+
+</section>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="app.js"></script>
   </body>

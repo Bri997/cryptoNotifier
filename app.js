@@ -4,11 +4,11 @@ const apiKey = "AIzaSyDi8P6Mcr_qrUcgI8tQBrR-4B-3IY_ewZc"
 const youtubeURL = 'https://www.googleapis.com/youtube/v3/search';
 
 let allCoinData = [];
-let youtubeDataHolder =[];
+
 
 
 function getCoinDataFromApi(callback){
-  // console.log(callback);
+
   const query = {
     url: coinUrl,
     dataType: 'json',
@@ -43,7 +43,7 @@ function getYoutubeData(callback, term) {
         maxResults: "5",
         part: "snippet",
         key: apiKey,
-        q:  youtubeSearch(term)
+        q:  term
 
       },
     dataType: 'json',
@@ -56,7 +56,20 @@ function getYoutubeData(callback, term) {
 
 getCoinDataFromApi(formatCryptoCoinData);
 getMarketCapData(displayMarketCapData);
-getYoutubeData(formatYoutubeData);
+getYoutubeData(formatYoutubeData, "crypto");
+
+function displayMarketCapData(data){
+  var formattedData = data;
+  var value = formattedData.toLocaleString({
+  });
+
+    $(".marketCapData").append(
+      `<div class = "marketCapContent">
+      <h3 class ="marketCapTxt">$${data.total_market_cap_usd.toLocaleString()}</h3> <p>Current Market Cap</p>
+      </div>`
+  );
+}
+
 
 function formatCryptoCoinData(data){
 
@@ -64,14 +77,14 @@ function formatCryptoCoinData(data){
      return {
        name: crypto.name,
        usdPrice: crypto.price_usd,
-       oneHour: crypto.percent_change_1h
+       oneHour: crypto.percent_change_1h,
+       oneDay: crypto.percent_change_24h,
+       symbol: crypto.symbol
 
      }
    })
    displayCryptoData(formattedData);
   }
-// console.log(youtubeDataHolder);
-// console.log(allCoinData);
 
 
 function filterCoinData(term){
@@ -89,51 +102,38 @@ function filterCoinData(term){
 
 }
 
-function youtubeSearch(term){
-
-  if (!term){
-    return "crypto";
-  }
-        // return term;
-     console.log(term);
-
-
-  // getYoutubeData();
-}
-
-function formatYoutubeData(data) {
-  // console.log(term);
-  for (let i = 0; i < data.items.length; i++){
-
-    $(".youtubeData").append( `
-                <a href= "https://www.youtube.com/watch?v=${data.items[i].id.videoId}"target="_blank">${data.items[i].snippet.title} </a><br>
-                <a href="https://www.youtube.com/watch?v=${data.items[i].id.videoId}}"target="_blank"><img src="${data.items[i].snippet.thumbnails.medium.url}"></a><br>
-              `);
-  }
-}
-
-
 function displayCryptoData(formattedData){
   $(".data").empty();
   for (let i = 0; i < formattedData.length; i++){
     let crypto = formattedData[i];
+    console.log(crypto);
       $(".data").append(`
-         <div class ="cryptoCards">
-           <h2 class ="cryptoName">${crypto.name}</h2> Current price is $ ${crypto.usdPrice}
-           <br>${crypto.name}'s 1 hour change is ${crypto.oneHour}%`
+         <div class ="${(+crypto.oneDay < 0)? "cryptoCards red" : "cryptoCards green"}">
+           <h2 class ="cryptoName">${crypto.name}</h2>
+           <h4 class ="cryptosymbol">${crypto.symbol}</h4> <p>Current price is $ <strong>${crypto.usdPrice}</strong>
+           <br>${crypto.name}'s 24 hour change is <strong>${crypto.oneDay}%</strong></p>`
          );
 
   }
 }
 
-function displayMarketCapData(data){
-  var formattedData = data;
-  var value = formattedData.toLocaleString({
-  });
-    $(".marketCapData").append(
-      `<h3>${data.total_market_cap_usd.toLocaleString()}</h3> Current Market Cap`
-  );
+
+
+function formatYoutubeData(data) {
+  $(".youtubeData").empty();
+  for (let i = 0; i < data.items.length; i++){
+
+    $(".youtubeData").append( `
+          <div class ="video">
+                <a href= "https://www.youtube.com/watch?v=${data.items[i].id.videoId}"target="_blank">${data.items[i].snippet.title} </a><br>
+                <a href="https://www.youtube.com/watch?v=${data.items[i].id.videoId}}"target="_blank"><img class = "videoImg" src="${data.items[i].snippet.thumbnails.medium.url}"></a><br>
+              </div>`);
+  }
 }
+
+
+
+
 
 function displayYoutubeData(youtubeFiltered) {
 
@@ -152,35 +152,65 @@ $(".youtubeData").append( `
 }
 
 
-function toggleChange() {
+function togglePostiveChange() {
   const filtered = allCoinData.filter(coin => {
     return +coin.percent_change_24h > 0;
+
+  }).sort((coin1, coin2) => {
+    return coin2.percent_change_24h - coin1.percent_change_24h
   });
   formatCryptoCoinData(filtered);
 }
+function toggleNegitiveChange(){
+  const filtered = allCoinData.filter(coin => {
+    return +coin.percent_change_24h < 0;
+
+  }).sort((coin1, coin2) => {
+    return coin1.percent_change_24h - coin2.percent_change_24h
+  });
+  formatCryptoCoinData(filtered);
+}
+
+
 
 $(function () {
   $(".js-search-form").submit(event => {
 
     event.preventDefault();
     const userSearch = $(".jsSearch").val();
-    filterCoinData(userSearch);
-    getYoutubeData(userSearch)
-    $(".jsSearch").val("");
-  });
-  $(".showChange").change(event => {
-    console.log("checked");
-    if ($(".showChange").is(":checked")){
-
-      toggleChange();
+    if (userSearch){
+      filterCoinData(userSearch);
+      getYoutubeData(formatYoutubeData, userSearch)
+      $(".jsSearch").val("");
     }
     else {
+      $(".mainDisplay").empty();
+      $(".mainDisplay").append(`
+                <h2>Search Some Crypto</h2>
+        <img class ="dogePic"src = "https://res.cloudinary.com/dx5z7wjpw/image/upload/v1522032061/dogecoin-logo.jpg">
+        </div>`);
+
+    }
+  });
+  $(".filterDropdown").change(event => {
+    console.log($(event.target).val());
+    let userChoice = $(event.target).val();
+    if (userChoice == "gainers"){
+      togglePostiveChange();
+    }
+    else if (userChoice == "losers"){
+      toggleNegitiveChange();
+    }
+
+    else {
       formatCryptoCoinData(allCoinData);
+      getYoutubeData(formatYoutubeData, "crypto")
     }
   });
   $(".clearButton").click(event =>{
     event.preventDefault();
     $(".showChange").prop('checked', false);
     formatCryptoCoinData(allCoinData);
+    getYoutubeData(formatYoutubeData, "crypto")
   });
 });

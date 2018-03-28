@@ -1,47 +1,236 @@
 
-body{
-    background-color: #ECF0F1;
+*{
+  box-sizing: border-box;
 }
-.header{
-  margin-left: auto;
-  margin-right: auto;
+h1, h2, h3, h4, h5, h6{
+  font-family: 'IBM Plex Sans', sans-serif;
+
 
 }
+h1{
+
+}
+h2{
+  /* font-size: 1.3em; */
+}
+p{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1em;
+}
+
+.logoLink{
+  flex:1
+}
+.logo {
+  width: 100%;
+
+}
+
+header {
+  display: flex;
+  background: #fff;
+  position: fixed;
+  height: 150px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.marketCapContent{
+  text-align: center;
+  width: 90%;
+  margin: 0  auto;
+}
+.marketCapData{
+  flex: 2;
+  /* margin-left: 3%; */
+  margin-bottom: 50px;
+  color: #446CB3;
+
+  /* position: fixed; */
+  background-color: #fff;
+}
+.searchArea{
+  flex: 2;
+  text-align: center;
+  /* clear:both; */
+  /* position: fixed; */
+  background-color: #fff;
+  padding-bottom: 55px;
+  padding-top: 25px;
+}
+
+.searchButton {
+  background: #6ec776;
+  background-image: -webkit-linear-gradient(top, #6ec776, #5cad62);
+  background-image: -moz-linear-gradient(top, #6ec776, #5cad62);
+  background-image: -ms-linear-gradient(top, #6ec776, #5cad62);
+  background-image: -o-linear-gradient(top, #6ec776, #5cad62);
+  background-image: linear-gradient(to bottom, #6ec776, #5cad62);
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border: beige;
+
+}
+
+.searchButton:hover {
+  background: #dd7a81;
+  background-image: -webkit-linear-gradient(top, #dd7a81, #D24D57);
+  background-image: -moz-linear-gradient(top, #dd7a81, #D24D57);
+  background-image: -ms-linear-gradient(top, #dd7a81, #D24D57);
+  background-image: -o-linear-gradient(top, #dd7a81, #D24D57);
+  background-image: linear-gradient(to bottom, #dd7a81, #D24D57);
+  text-decoration: none;
+}
+
+.main{
+  margin-top: 180px;
+}
+
+
+.marketCapTxt{
+  /* color: #446CB3;
+  margin-left: 3%; */
+}
+
+
 
 .mainDisplay{
-  display: inline-flex;
+  /* max-width: 800px; */
 }
-.cryptoCards{
-  padding-bottom: 150px;
-  border-style: solid;
+.cryptoCards {
   border-width: 2px;
-  border-color: #6C7A89;
-  border-radius: 25px;
-  background-color: white;
-  text-align: center;
-  width: 80%;
+  border-style: solid;
+  margin-bottom: 5px;
+  display: inline-block;
+  width: 250px;
+  min-height: 200px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 2px;
+
+}
+
+.cryptoCards p {
+  width: 95%;
   margin: 0 auto;
-  margin-top: 55px;
+}
+.cryptoCards h2{
+  text-align: center;
+  color: white;
+}
+
+.cryptoCards h4 {
+  text-align: center;
+
+}
+
+.cryptoCards p{
+  text-align: center;
+}
+.red{
+  background-color: #dd7a81;
+}
+
+.green {
+  background-color: #6ec776;
+}
+
+.logo {
+  width: 110%;
+}
+a {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .8em;
+  text-align: center;
+}
+
+
+.jsSearch {
+  width: 300px;
+  height: 35px;
+
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  text-align: center;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  text-align: center;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  text-align: center;
+}
+:-moz-placeholder { /* Firefox 18- */
+  text-align: center;
+}
+
+
+
+.video{
+  max-width: 90%;
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 10px;
   margin-bottom: 55px;
-  -webkit-box-shadow: 10px 12px 35px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 10px 12px 35px 0px rgba(0,0,0,0.2);
-  box-shadow: 10px 12px 35px 0px rgba(0,0,0,0.2);
+}
+.video a{
+  width: 90%;
+  text-align: center;
+}
+.videoImg{
+  width: 350px;
+
+}
+
+
+@media (max-width: 560px) {
+  .cryptoCards {
+    display: block;
+    margin: 5px auto;
+    width: 90%;
+
   }
 
-  .cryptoName{
-    color: blue;
-    font-size: 3em;
+  .video {
+    margin: 8px auto;
+    text-align: center;
+
+  }
+  .videoImg {
+    width: 80%;
+    max-width: 400px;
+
   }
 
-  .searchArea{
-    padding-top: 25px;
-    padding-bottom: 25px;
-    background-color: #ABB7B7;
+  .marketCapContent {
+    width: 50%;
   }
-.search{
 
-padding-left: 110px;
-padding-right: 110px;
+  .marketCapData{
+    width: 10%;
+    font-size: .5em;
+    margin-right: 15px;
+  }
 
+  .jsSearch{
+    width: 80%;
+  }
+  .filterDropdown{
+  margin-right: 10px;
+}
+  .searchArea {
+    width: 50%;
+  }
+
+  .video a{
+    width: 90%;
+    text-align: center;
 
 }
