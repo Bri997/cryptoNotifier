@@ -178,7 +178,7 @@ $(function () {
     const userSearch = $(".jsSearch").val();
     let coinInfo =[];
     allCoinData.forEach (crypto => {
-      console.log(crypto.name);
+
       coinInfo.push(crypto.name.toLowerCase());
       coinInfo.push(crypto.symbol.toLowerCase());
     });
@@ -187,10 +187,11 @@ $(function () {
       filterCoinData(userSearch);
       getYoutubeData(formatYoutubeData, userSearch)
       $(".jsSearch").val("");
+
     }
     else {
-      $(".mainDisplay").empty();
-      $(".mainDisplay").append(`
+      $(".data").empty();
+      $(".data").append(`
                 <h2>Search Some Crypto</h2>
         <img class ="dogePic"src = "https://res.cloudinary.com/dx5z7wjpw/image/upload/v1522032061/dogecoin-logo.jpg">
         </div>`);
