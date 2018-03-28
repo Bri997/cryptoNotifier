@@ -6,7 +6,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans|Montserrat" rel="stylesheet">
       <link rel="stylesheet" href="app.css">
-    <title></title>
+    <title>Crypto Checker</title>
   </head>
   <body>
 <header role ="banner" >
@@ -19,14 +19,14 @@
 
       <input type="text" class = "jsSearch" name="jsSearch" value="" placeholder="Search Currencies">
 
-  
-      <select class="filterDropdown" name="">
-        <option value="all coins">Show All Coins</option>
-        <option value="gainers">Show Biggest Gainers</option>
-        <option value="losers">Show Biggest Losers</option>
+
+      <select aria-label="Find coin gianers and losers"class="filterDropdown" name="">
+        <option aria-labelledby="all coins"value="all coins">Show All Coins</option>
+        <option aria-labelledby="Coin gainers"value="gainers">Show Biggest Gainers</option>
+        <option aria-labelledby="Coin losers"value="losers">Show Biggest Losers</option>
 
       </select>
-      <button type="submit" class = "searchButton" name="button">Search</button>
+      <button aria-label="Search"type="submit" class = "searchButton" name="button">Search</button>
     </form>
   </div>
 </header>
