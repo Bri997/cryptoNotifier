@@ -6,7 +6,6 @@ const youtubeURL = 'https://www.googleapis.com/youtube/v3/search';
 let allCoinData = [];
 
 
-
 function getCoinDataFromApi(callback){
 
   const query = {
@@ -14,11 +13,11 @@ function getCoinDataFromApi(callback){
     dataType: 'json',
     type: 'Get',
     success: function (data){
-      allCoinData = data
+      allCoinData = data;
       callback(data);
     }
 
-  }
+  };
   $.ajax(query);
 
 }
@@ -81,8 +80,8 @@ function formatCryptoCoinData(data){
        oneDay: crypto.percent_change_24h,
        symbol: crypto.symbol
 
-     }
-   })
+     };
+   });
    displayCryptoData(formattedData);
   }
 
@@ -98,15 +97,13 @@ function filterCoinData(term){
   });
   formatCryptoCoinData(filterd);
 
-
-
 }
 
 function displayCryptoData(formattedData){
   $(".data").empty();
   for (let i = 0; i < formattedData.length; i++){
     let crypto = formattedData[i];
-    console.log(crypto);
+
       $(".data").append(`
          <div class ="${(+crypto.oneDay < 0)? "cryptoCards red" : "cryptoCards green"}">
            <h2 class ="cryptoName">${crypto.name}</h2>
@@ -115,6 +112,7 @@ function displayCryptoData(formattedData){
          );
 
   }
+
 }
 
 
@@ -138,7 +136,7 @@ function formatYoutubeData(data) {
 function displayYoutubeData(youtubeFiltered) {
 
   for(let i = 0; i < youtubeFiltered.length; i++){
-  let videoInfo = formatYoutubeData[i]
+  let videoInfo = formatYoutubeData[i];
 
 $(".youtubeData").append( `
     <div>
@@ -172,13 +170,20 @@ function toggleNegitiveChange(){
 }
 
 
-
 $(function () {
+
   $(".js-search-form").submit(event => {
 
     event.preventDefault();
     const userSearch = $(".jsSearch").val();
-    if (userSearch){
+    let coinInfo =[];
+    allCoinData.forEach (crypto => {
+      console.log(crypto.name);
+      coinInfo.push(crypto.name.toLowerCase());
+      coinInfo.push(crypto.symbol.toLowerCase());
+    });
+
+    if (coinInfo.includes(userSearch.toLowerCase())){
       filterCoinData(userSearch);
       getYoutubeData(formatYoutubeData, userSearch)
       $(".jsSearch").val("");
@@ -191,7 +196,9 @@ $(function () {
         </div>`);
 
     }
-  });
+
+
+});
   $(".filterDropdown").change(event => {
     console.log($(event.target).val());
     let userChoice = $(event.target).val();

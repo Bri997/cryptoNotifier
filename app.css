@@ -74,6 +74,7 @@ header {
   padding: 10px 20px 10px 20px;
   text-decoration: none;
   border: beige;
+  margin-top: 2px;
 
 }
 
@@ -188,7 +189,9 @@ a {
   width: 350px;
 
 }
-
+.dogePic {
+  width: 50%;
+  }
 
 @media (max-width: 560px) {
   .cryptoCards {
