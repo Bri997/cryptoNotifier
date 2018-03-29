@@ -201,7 +201,7 @@ $(function () {
 
 });
   $(".filterDropdown").change(event => {
-    console.log($(event.target).val());
+
     let userChoice = $(event.target).val();
     if (userChoice == "gainers"){
       togglePostiveChange();
